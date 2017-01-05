@@ -1,0 +1,35 @@
+{
+  "name": "homebridge-meteostation",
+  "version": "0.1.0",
+  "author": "BardinPetr",
+  "license": "MIT",
+  "description": "Plugin for Homebridge to use Arduino (ESP8266) - based home meteostation with HomeKit",
+
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Warn: no test specified\""
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BardinPetr/homebridge-meteostation.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BardinPetr/homebridge-meteostation/issues"
+  },
+  "homepage": "https://github.com/BardinPetr/homebridge-meteostation#readme",
+
+  "keywords": [
+    "homebridge-plugin",
+    "meteostation",
+    "arduino"
+  ],
+
+  "engines": {
+    "node": ">=0.12.0",
+    "homebridge": ">=0.2.0"
+  },
+  "dependencies": {
+    "request": "^2.65.0"
+  }
+}
