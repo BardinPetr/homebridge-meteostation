@@ -11,7 +11,7 @@ module.exports = function(homebridge) {
 function HomeMeteoAccessory(log, config) {
     this.log = log;
     this.name = config["name"];
-    this.url = config["base_url"];
+    this.url = config["url"];
     this.temp_url = config["temp_url"];
     this.humi_url = config["humi_url"];
     this.light_url = config["light_url"] || null;
@@ -45,11 +45,11 @@ function HomeMeteoAccessory(log, config) {
 
     setInterval(() => {
         this.getValue(null, (err, { humidity, temperature, light}) => {
+        this.temperatureService
+        .setCharacteristic(Characteristic.CurrentTemperature, temperature);
+
         this.humidityService
         .setCharacteristic(Characteristic.CurrentRelativeHumidity, humidity)
-
-        this.temperatureService
-        .setCharacteristic(Characteristic.CurrentTemperature, temperature)
 
         if(this.light_url != null){
             this.lightService
@@ -59,10 +59,40 @@ function HomeMeteoAccessory(log, config) {
 }
 
 HomeMeteoAccessory.prototype.getValue = function(name, callback) {
-    this.humidity = 5;
-    this.temperature = 3;     
-    this.light = 45; 
-    
+    this.log("Requesting temperature");
+    request(this.url + this.temp_url, (error, response, body) => {
+        if (!error && response.statusCode == 200) {
+            var temperature = parseInt(body, 10);
+            switch(name){
+                case "temperature":
+                return callback(null, temperature);
+                case "humidity":
+                break;
+                case "light":
+                break;
+                default: 
+                return callback(null, { humidity: 5, temperature: temperature, light: 5 })
+            }
+        }
+    })
+    /*
+    this.log("Requesting humidity");
+    request(this.url + this.humi_url, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            this.humidity = parseInt(body, 10);
+        }
+    });    
+
+    this.log("Requesting light");
+    if(this.light_url != null){
+        request(this.url + this.light_url, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                this.light = parseInt(body, 10);
+            }
+        });
+    }
+    */
+/*
     switch(name){
         case "temperature":
         return callback(null, this.temperature)
@@ -73,6 +103,7 @@ HomeMeteoAccessory.prototype.getValue = function(name, callback) {
         default: 
         return callback(null, { humidity: this.humidity, temperature: this.temperature, light: this.light })
     }
+    */
 }
 
 HomeMeteoAccessory.prototype.getServices = function() {
