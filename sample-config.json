@@ -1,0 +1,23 @@
+{
+    "bridge": {
+        "name": "Homebridge",
+        "username": "AA:BB:CC:DD:EE:FF",
+        "port": 51826,
+        "pin": "123-45-678"
+    },
+
+    "platforms": [
+    ],
+
+    "accessories": [
+        {
+            "accessory": "HomeMeteo",
+            "name": "Meteostation",
+            "url":  "http://192.168.0.38",
+            "temp_url":  "/temperature",
+            "humi_url":  "/humidity",
+            "light_url": "/light",
+            "freq": 1000
+        }
+    ]
+}
