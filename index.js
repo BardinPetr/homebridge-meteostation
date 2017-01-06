@@ -15,7 +15,8 @@ function HomeMeteoAccessory(log, config) {
     this.temp_url = config["temp_url"];
     this.humi_url = config["humi_url"];
     this.light_url = config["light_url"] || null;
-    
+    this.freq = config["freq"] || 1000;
+
     this.temperature = 0;
     this.humidity = 0;
     this.light = 0;
@@ -45,6 +46,7 @@ function HomeMeteoAccessory(log, config) {
 
     setInterval(() => {
         this.getValue(null, (err, { humidity, temperature, light}) => {
+
         this.temperatureService
         .setCharacteristic(Characteristic.CurrentTemperature, temperature);
 
@@ -55,11 +57,10 @@ function HomeMeteoAccessory(log, config) {
             this.lightService
             .setCharacteristic(Characteristic.CurrentAmbientLightLevel, light)   
         }
-        })}, 1000)
+        })}, this.freq)
 }
 
 HomeMeteoAccessory.prototype.getValue = function(name, callback) {
-    this.log("Requesting temperature");
     request(this.url + this.temp_url, (error, response, body) => {
         if (!error && response.statusCode == 200) {
             var temperature = parseInt(body, 10);
@@ -67,7 +68,6 @@ HomeMeteoAccessory.prototype.getValue = function(name, callback) {
                 return callback(null, temperature);
             }
             else{
-                this.log("Requesting humidity");
                 request(this.url + this.temp_url, (error, response, body) => {
                     if (!error && response.statusCode == 200) {
                         var humidity = parseInt(body, 10);
@@ -75,7 +75,6 @@ HomeMeteoAccessory.prototype.getValue = function(name, callback) {
                             return callback(null, humidity);
                         }
                         else{
-                            this.log("Requesting light");
                             request(this.url + this.temp_url, (error, response, body) => {
                                 if (!error && response.statusCode == 200) {
                                     var light = parseInt(body, 10);
