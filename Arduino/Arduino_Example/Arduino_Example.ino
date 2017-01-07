@@ -40,13 +40,14 @@ void loop() {
   int humidity = dht.getHumidity();
   int temperature = dht.getTemperature();
   int light = lightMeter.readLightLevel();;
+  int output = 0;
   
   if (req.indexOf("/temperature") != -1)
-    client.print(temperature);
+    output = temperature;
   else if (req.indexOf("/humidity") != -1)
-    client.print(humidity);
+    output = humidity;
   else if (req.indexOf("/light") != -1)
-    client.print(light);
+    output = light;
   else {
     Serial.println("invalid request");
     client.stop();
@@ -54,8 +55,12 @@ void loop() {
   }
 
   client.flush();
+  String s = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<!DOCTYPE HTML>\r\n<html>\r\n";
+  s += output;
+  s += "</html>\n";
 
+  client.print(s);
   delay(1);
-  Serial.println("Client disonnected");
+  Serial.println("Client disonnected")
 }
 
