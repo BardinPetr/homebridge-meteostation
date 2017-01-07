@@ -1,6 +1,6 @@
 homebridge-meteostation
 =======================
-![build](https://api.travis-ci.org/BardinPetr/homebridge-meteostation.svg?branch=master)
+[![NPMV](https://img.shields.io/npm/v/homebridge-meteostation.svg?style=flat-square)](https://npmjs.org/package/homebridge-meteostation) [![Travis](https://img.shields.io/travis/BardinPetr/homebridge-meteostation.svg?style=flat-square)](https://travis-ci.org/BardinPetr/homebridge-meteostation) [![David](https://img.shields.io/david/BardinPetr/homebridge-meteostation.svg?style=flat-square)](https://david-dm.org/BardinPetr/homebridge-meteostation) [![NPML](https://img.shields.io/npm/l/homebridge-meteostation.svg?style=flat-square)](https://github.com/BardinPetr/homebridge-meteostation/blob/master/LICENSE) [![NPMD](https://img.shields.io/npm/dt/homebridge-meteostation.svg?style=flat-square)](https://npmjs.org/package/homebridge-meteostation)
 -------------------
 Plugin for Homebridge to use Arduino (ESP8266) - based home meteostation with HomeKit.
 With this plugin You can make Your own (DIY) meteostation and connect it to smart home based on Apple HomeKit. Now You can use this characteristics: **temperature**, **humidity**, **ambient light**.
