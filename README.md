@@ -1,6 +1,7 @@
 homebridge-meteostation
 =======================
-
+![build](https://api.travis-ci.org/BardinPetr/homebridge-meteostation.svg?branch=master)
+-------------------
 Plugin for Homebridge to use Arduino (ESP8266) - based home meteostation with HomeKit.
 With this plugin You can make Your own (DIY) meteostation and connect it to smart home based on Apple HomeKit. Now You can use this characteristics: **temperature**, **humidity**, **ambient light**.
 
