@@ -1,3 +1,5 @@
+/*jshint sub:true*/
+
 var request = require("request");
 var Service, Characteristic;
 
@@ -22,7 +24,6 @@ function HomeMeteoAccessory(log, config) {
     this.light = 0;
 
     this.services = [];
-    this.service;
 
     this.temperatureService = new Service.TemperatureSensor ("Temperature Sensor");
     this.temperatureService
@@ -53,11 +54,11 @@ function HomeMeteoAccessory(log, config) {
         this.humidityService
         .setCharacteristic(Characteristic.CurrentRelativeHumidity, humidity);
 
-        if(this.light_url != null){
+        if(this.light_url !== null){
             this.lightService
             .setCharacteristic(Characteristic.CurrentAmbientLightLevel, light);
         }
-        })}, this.freq);
+        });}, this.freq);
 }
 
 HomeMeteoAccessory.prototype.getValue = function(name, callback) {
