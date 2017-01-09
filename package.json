@@ -1,6 +1,6 @@
 {
   "name": "homebridge-meteostation",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "author": "BardinPetr",
   "license": "MIT",
   "description": "Plugin for Homebridge to use Arduino (ESP8266) - based home meteostation with HomeKit",
