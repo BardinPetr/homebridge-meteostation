@@ -6,7 +6,7 @@
   "description": "Plugin for Homebridge to use Arduino (ESP8266) - based home meteostation with HomeKit",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Warn: no test specified\""
+    "test": "./node_modules/jshint/bin/jshint index.js"
   },
   "repository": {
     "type": "git",
@@ -27,5 +27,8 @@
   },
   "dependencies": {
     "request": "^2.65.0"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.0"
   }
 }
