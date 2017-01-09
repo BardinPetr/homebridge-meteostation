@@ -6,7 +6,7 @@ module.exports = function(homebridge) {
     Characteristic = homebridge.hap.Characteristic;
     
     homebridge.registerAccessory("homebridge-meteostation", "HomeMeteo", HomeMeteoAccessory);
-}
+};
 
 function HomeMeteoAccessory(log, config) {
     this.log = log;
@@ -36,7 +36,7 @@ function HomeMeteoAccessory(log, config) {
     .on('get', this.getValue.bind(this, 'humidity'));
     this.services.push(this.humidityService);
 
-    if(this.light_url != null){
+    if(this.light_url !== null){
         this.lightService = new Service.LightSensor  ("Light Sensor");
         this.lightService
         .getCharacteristic(Characteristic.CurrentAmbientLightLevel)
@@ -51,13 +51,13 @@ function HomeMeteoAccessory(log, config) {
         .setCharacteristic(Characteristic.CurrentTemperature, temperature);
 
         this.humidityService
-        .setCharacteristic(Characteristic.CurrentRelativeHumidity, humidity)
+        .setCharacteristic(Characteristic.CurrentRelativeHumidity, humidity);
 
         if(this.light_url != null){
             this.lightService
-            .setCharacteristic(Characteristic.CurrentAmbientLightLevel, light)   
+            .setCharacteristic(Characteristic.CurrentAmbientLightLevel, light);
         }
-        })}, this.freq)
+        })}, this.freq);
 }
 
 HomeMeteoAccessory.prototype.getValue = function(name, callback) {
@@ -92,8 +92,8 @@ HomeMeteoAccessory.prototype.getValue = function(name, callback) {
             } //End: else, name != "temperature"
         } //End: if OK respone
     }); //End: request temperature
-}
+};
 
 HomeMeteoAccessory.prototype.getServices = function() {
     return this.services;
-}
+};
