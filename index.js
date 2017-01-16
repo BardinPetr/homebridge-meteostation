@@ -14,6 +14,8 @@ function HomeMeteoAccessory(log, config) {
     this.log = log;
     this.name = config["name"];
     this.url = config["url"];
+    this.type = config["type"] || "page";
+    this.json_url = config["json_url"] || null;
     this.temp_url = config["temp_url"];
     this.humi_url = config["humi_url"];
     this.light_url = config["light_url"] || null;
@@ -62,37 +64,46 @@ function HomeMeteoAccessory(log, config) {
 }
 
 HomeMeteoAccessory.prototype.getValue = function(name, callback) {
-    request(this.url + this.temp_url, (error, response, body) => {
-        if (!error && response.statusCode == 200) {
-            var temperature = parseInt(body, 10);
-            if(name == "temperature"){
-                return callback(null, temperature);
-            }
-            else{
-                request(this.url + this.temp_url, (error, response, body) => {
-                    if (!error && response.statusCode == 200) {
-                        var humidity = parseInt(body, 10);
-                        if(name == "humidity"){
-                            return callback(null, humidity);
-                        }
-                        else{
-                            request(this.url + this.temp_url, (error, response, body) => {
-                                if (!error && response.statusCode == 200) {
-                                    var light = parseInt(body, 10);
-                                    if(name == "light"){
-                                        return callback(null, light);
-                                    }
-                                    else{
-                                        return callback(null, { humidity: humidity, temperature: temperature, light: light });
-                                    } //End: else, name != "humidity"
-                                } //End: if OK respone
-                            }); //End: request light
-                        } //End: else, name != "humidity"
-                    } //End: if OK respone
-                }); //End: request humidity
-            } //End: else, name != "temperature"
-        } //End: if OK respone
-    }); //End: request temperature
+    if(type == "page"){
+        request(this.url + this.temp_url, (error, response, body) => {
+            if (!error && response.statusCode == 200) {
+                var temperature = parseInt(body, 10);
+                if(name == "temperature"){
+                    return callback(null, temperature);
+                }
+                else{
+                    request(this.url + this.temp_url, (error, response, body) => {
+                        if (!error && response.statusCode == 200) {
+                            var humidity = parseInt(body, 10);
+                            if(name == "humidity"){
+                                return callback(null, humidity);
+                            }
+                            else{
+                                request(this.url + this.temp_url, (error, response, body) => {
+                                    if (!error && response.statusCode == 200) {
+                                        var light = parseInt(body, 10);
+                                        if(name == "light"){
+                                            return callback(null, light);
+                                        }
+                                        else{
+                                            return callback(null, { humidity: humidity, temperature: temperature, light: light });
+                                        } //End: else, name != "humidity"
+                                    } //End: if OK respone
+                                }); //End: request light
+                            } //End: else, name != "humidity"
+                        } //End: if OK respone
+                    }); //End: request humidity
+                } //End: else, name != "temperature"
+            } //End: if OK respone
+        }); //End: request temperature
+    } else {
+        request(this.url + this.json_url, (error, response, body) => {
+            if (!error && response.statusCode == 200) {
+                var obj = JSON.parse(body);
+                return callback(null, { humidity: obj.humidity, temperature: obj.temperature, light: obj.light });
+            } 
+        });
+    }
 };
 
 HomeMeteoAccessory.prototype.getServices = function() {
