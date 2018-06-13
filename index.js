@@ -72,14 +72,14 @@ HomeMeteoAccessory.prototype.getValue = function(name, callback) {
                     return callback(null, temperature);
                 }
                 else{
-                    request(this.url + this.temp_url, (error, response, body) => {
+                    request(this.url + this.humi_url, (error, response, body) => {
                         if (!error && response.statusCode == 200) {
                             var humidity = parseInt(body, 10);
                             if(name == "humidity"){
                                 return callback(null, humidity);
                             }
                             else{
-                                request(this.url + this.temp_url, (error, response, body) => {
+                                request(this.url + this.light_url, (error, response, body) => {
                                     if (!error && response.statusCode == 200) {
                                         var light = parseInt(body, 10);
                                         if(name == "light"){
